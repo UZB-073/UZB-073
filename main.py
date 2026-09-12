@@ -38,8 +38,8 @@ from Crypto.Hash import SHA1
 #-----------------------------
 
 BOT_TOKEN = "8618693830:AAHesw4xxZnw7gpfPWOhl2XYZecphzS6DuQ"  # <-- Yahan apna token daalo
-ADMIN_ID = [8254935096]
-OWNER_USERNAME = "@GLITCHYN"
+ADMIN_ID = [8254935096, 6214449243]
+OWNER_USERNAME = "@thebexruzchik"
 
 SUBSCRIPTION_FILE = "subscriptions.json"
 USERS_FILE = "users.txt"
