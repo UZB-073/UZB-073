@@ -37,7 +37,7 @@ from Crypto.Hash import SHA1
 # CONFIG / CONSTANTS
 #-----------------------------
 
-BOT_TOKEN = "8660997845:AAHfxJfWE2e6GlO6QH1vz0Q6JncZH8K_X3Q"  # <-- Yahan apna token daalo
+BOT_TOKEN = "8618693830:AAHesw4xxZnw7gpfPWOhl2XYZecphzS6DuQ"  # <-- Yahan apna token daalo
 ADMIN_ID = [8254935096]
 OWNER_USERNAME = "@GLITCHYN"
 
