@@ -8,10 +8,11 @@ import json
 import time
 import datetime
 import re
+import sys
+import asyncio  # <-- NAYA IMPORT (Python 3.14 Fix)
+import requests
 from io import BytesIO
 from collections import defaultdict
-import sys
-import requests
 
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
@@ -1139,6 +1140,16 @@ async def error_handler(update, context):
     print("Exception:", context.error)
 
 def main():
+    # ==========================================
+    # PYTHON 3.14 EVENT LOOP FIX
+    # ==========================================
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+    # ==========================================
+
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
     conv_handler = ConversationHandler(
