@@ -9,7 +9,9 @@ import time
 import datetime
 import re
 import sys
-import asyncio  # <-- NAYA IMPORT (Python 3.14 Fix)
+import asyncio
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
 import requests
 from io import BytesIO
 from collections import defaultdict
@@ -35,7 +37,7 @@ from Crypto.Hash import SHA1
 # CONFIG / CONSTANTS
 #-----------------------------
 
-BOT_TOKEN = "8618693830:AAHesw4xxZnw7gpfPWOhl2XYZecphzS6DuQ"  # <-- Yahan apna token daalo
+BOT_TOKEN = "8660997845:AAHfxJfWE2e6GlO6QH1vz0Q6JncZH8K_X3Q"  # <-- Yahan apna token daalo
 ADMIN_ID = [8254935096]
 OWNER_USERNAME = "@GLITCHYN"
 
@@ -73,6 +75,26 @@ WAIT_CPM2B_PASSWORD = 22
 # Mileage Reset
 WAIT_KM_FILE = 23
 WAIT_KM_KEY = 24
+
+#-----------------------------
+# DUMMY WEB SERVER FOR RENDER FREE TIER
+#-----------------------------
+
+class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is alive and running!")
+
+    def log_message(self, format, *args):
+        # Suppress HTTP server logs to keep console clean
+        pass
+
+def run_health_check_server():
+    port = int(os.environ.get("PORT", 8080))
+    server = HTTPServer(("0.0.0.0", port), HealthCheckHandler)
+    print(f"Dummy web server listening on port {port}")
+    server.serve_forever()
 
 #-----------------------------
 # MOD KEYBOARD
@@ -1141,6 +1163,11 @@ async def error_handler(update, context):
 
 def main():
     # ==========================================
+    # START DUMMY WEB SERVER FOR RENDER FREE TIER
+    # ==========================================
+    threading.Thread(target=run_health_check_server, daemon=True).start()
+
+    # ==========================================
     # PYTHON 3.14 EVENT LOOP FIX
     # ==========================================
     try:
@@ -1204,7 +1231,7 @@ def main():
     app.add_handler(CommandHandler("admin", admin_panel))
     app.add_error_handler(error_handler)
 
-    print("🤖 Premium ES3 Bot running (no Unlock All / Local Mods)...")
+    print("🤖 Premium ES3 Bot running with dummy web server...")
     app.run_polling()
 
 if __name__ == "__main__":
